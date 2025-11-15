@@ -50,46 +50,14 @@ services:
         hard: 65535
     environment:
       - TMPDIR=/var/lib/plausible/tmp
-      # required: https://github.com/plausible/community-edition/wiki/configuration#required
       - BASE_URL=${BASE_URL}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      # optional: https://github.com/plausible/community-edition/wiki/configuration#optional
-      # registration: https://github.com/plausible/community-edition/wiki/configuration#registration
-      - TOTP_VAULT_KEY
-      - DISABLE_REGISTRATION
-      - ENABLE_EMAIL_VERIFICATION
-      # web: https://github.com/plausible/community-edition/wiki/configuration#web
-      - HTTP_PORT
-      - HTTPS_PORT
-      # databases: https://github.com/plausible/community-edition/wiki/configuration#database
-      - DATABASE_URL
-      - CLICKHOUSE_DATABASE_URL
-      # Google: https://github.com/plausible/community-edition/wiki/configuration#google
-      - GOOGLE_CLIENT_ID
-      - GOOGLE_CLIENT_SECRET
-      # geolocation: https://github.com/plausible/community-edition/wiki/configuration#ip-geolocation
-      - IP_GEOLOCATION_DB
-      - GEONAMES_SOURCE_FILE
-      - MAXMIND_LICENSE_KEY
-      - MAXMIND_EDITION
-      # email: https://github.com/plausible/community-edition/wiki/configuration#email
-      - MAILER_ADAPTER
-      - MAILER_EMAIL
-      - MAILER_NAME
-      - SMTP_HOST_ADDR
-      - SMTP_HOST_PORT
-      - SMTP_USER_NAME
-      - SMTP_USER_PWD
-      - SMTP_HOST_SSL_ENABLED
-      - POSTMARK_API_KEY
-      - MAILGUN_API_KEY
-      - MAILGUN_DOMAIN
-      - MAILGUN_BASE_URI
-      - MANDRILL_API_KEY
-      - SENDGRID_API_KEY
-
-volumes:
-  db-data:
-  event-data:
-  event-logs:
-  plausible-data:
+      - TOTP_VAULT_KEY=${TOTP_VAULT_KEY}
+      - DISABLE_REGISTRATION=true          # así cierras registros públicos
+      - ENABLE_EMAIL_VERIFICATION=false    # de momento desactiva verificación email
+      - HTTP_PORT=8000
+      # si NO quieres que Plausible gestione TLS:
+      # - HTTPS_PORT=0
+      - DATABASE_URL=postgres://postgres:postgres@plausible_db:5432/plausible
+      - CLICKHOUSE_DATABASE_URL=http://plausible_events_db:8123/plausible
+ 
